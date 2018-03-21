@@ -12,11 +12,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Azure.Commands.Insights.Metrics;
-using Microsoft.Azure.Management.Monitor;
-using Microsoft.Azure.Management.Monitor.Models;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
@@ -31,10 +33,10 @@ namespace Microsoft.Azure.Commands.Insights.Test.Metrics
     public class GetAzureRmMetricTests
     {
         private readonly GetAzureRmMetricCommand cmdlet;
-        private readonly Mock<MonitorClient> MonitorClientMock;
+        private readonly Mock<MonitorManagementClient> MonitorClientMock;
         private readonly Mock<IMetricsOperations> insightsMetricOperationsMock;
         private Mock<ICommandRuntime> commandRuntimeMock;
-        private Microsoft.Rest.Azure.AzureOperationResponse<IEnumerable<Metric>> response;
+        private Microsoft.Rest.Azure.AzureOperationResponse<Response> response;
         private string resourceId;
         private ODataQuery<Metric> filter;
 
@@ -42,21 +44,18 @@ namespace Microsoft.Azure.Commands.Insights.Test.Metrics
         {
             ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
             insightsMetricOperationsMock = new Mock<IMetricsOperations>();
-            MonitorClientMock = new Mock<MonitorClient>();
+            MonitorClientMock = new Mock<MonitorManagementClient>();
             commandRuntimeMock = new Mock<ICommandRuntime>();
             cmdlet = new GetAzureRmMetricCommand()
             {
                 CommandRuntime = commandRuntimeMock.Object,
-                MonitorClient = MonitorClientMock.Object
+                MonitorManagementClient = MonitorClientMock.Object
             };
 
-            response = new Microsoft.Rest.Azure.AzureOperationResponse<IEnumerable<Metric>>()
-            {
-                Body = new List<Metric>()
-            };
+            response = new Microsoft.Rest.Azure.AzureOperationResponse<Response>();
 
-            insightsMetricOperationsMock.Setup(f => f.ListWithHttpMessagesAsync(It.IsAny<string>(), It.IsAny<ODataQuery<Metric>>(), It.IsAny<Dictionary<string, List<string>>>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult<Microsoft.Rest.Azure.AzureOperationResponse<IEnumerable<Metric>>>(response))
+            insightsMetricOperationsMock.Setup(f => f.ListWithHttpMessagesAsync(It.IsAny<string>(), It.IsAny<ODataQuery<MetadataValue>>(), It.IsAny<string>(), It.IsAny<TimeSpan?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<ResultType>(), It.IsAny<string>(), It.IsAny<Dictionary<string, List<string>>>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult<Microsoft.Rest.Azure.AzureOperationResponse<Response>>(response))
                 .Callback((string r, ODataQuery<Metric> s, Dictionary<string, List<string>> headers, CancellationToken t) =>
                  {
                     resourceId = r;

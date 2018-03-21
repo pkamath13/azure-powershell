@@ -12,7 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-namespace Microsoft.Azure.Management.Monitor.Models
+extern alias NewSDK;
+
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
+
+namespace Microsoft.Azure.Commands.Insights.OutputClasses
 {
     /// <summary>
     /// Wraps around MetricAvailability

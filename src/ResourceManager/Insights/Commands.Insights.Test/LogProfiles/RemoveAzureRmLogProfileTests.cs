@@ -12,11 +12,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.LogProfiles;
-using Microsoft.Azure.Management.Monitor.Management;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;

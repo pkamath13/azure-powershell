@@ -12,8 +12,10 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.ResourceManager.Common;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using System.Management.Automation;
 using System.Collections.Generic;
 

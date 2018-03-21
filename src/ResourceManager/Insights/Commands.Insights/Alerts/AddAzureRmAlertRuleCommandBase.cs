@@ -12,12 +12,14 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Net;
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.OutputClasses;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
+using System.Net;
 
 namespace Microsoft.Azure.Commands.Insights.Alerts
 {

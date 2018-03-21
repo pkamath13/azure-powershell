@@ -12,6 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias OldSDK;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,8 +22,8 @@ using System.Management.Automation;
 using System.Threading;
 using System.Xml;
 using Microsoft.Azure.Commands.Insights.OutputClasses;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management.Models;
 
 namespace Microsoft.Azure.Commands.Insights.Diagnostics
 {
@@ -29,7 +31,7 @@ namespace Microsoft.Azure.Commands.Insights.Diagnostics
     /// Get the list of events for at a subscription level.
     /// </summary>
     [Cmdlet(VerbsCommon.Set, "AzureRmDiagnosticSetting", SupportsShouldProcess = true), OutputType(typeof(PSServiceDiagnosticSettings))]
-    public class SetAzureRmDiagnosticSettingCommand : ManagementCmdletBase
+    public class SetAzureRmDiagnosticSettingCommand : OldManagementCmdletBase
     {
         public const string StorageAccountIdParamName = "StorageAccountId";
         public const string ServiceBusRuleIdParamName = "ServiceBusRuleId";

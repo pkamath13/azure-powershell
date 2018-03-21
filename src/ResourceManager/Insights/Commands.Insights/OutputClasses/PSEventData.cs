@@ -12,13 +12,14 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Management.Monitor.Models;
-using System;
+extern alias NewSDK;
+
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 
 namespace Microsoft.Azure.Commands.Insights.OutputClasses
 {
     /// <summary>
-    /// Wrapps around the EventData and exposes all the localized strings as invariant/localized properties
+    /// Wraps around the EventData and exposes all the localized strings as invariant/localized properties
     /// </summary>
     public class PSEventData : EventData
     {
@@ -43,9 +44,28 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         public new PSDictionaryElement Properties { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the EventData class.
+        /// Initializes a new instance of the PSEventData class.
         /// </summary>
         public PSEventData(EventData eventData)
+            : base(
+                  caller: eventData.Caller,
+                  description: eventData.Description,
+                  correlationId: eventData.CorrelationId,
+                  eventDataId: eventData.EventDataId,
+                  eventName: eventData.EventName,
+                  category: eventData.Category,
+                  eventTimestamp: eventData.EventTimestamp,
+                  id: eventData.Id,
+                  level: eventData.Level,
+                  operationId: eventData.OperationId,
+                  operationName: eventData.OperationName,
+                  resourceGroupName: eventData.ResourceGroupName,
+                  resourceProviderName: eventData.ResourceProviderName,
+                  resourceId: eventData.ResourceId,
+                  status: eventData.Status,
+                  submissionTimestamp: eventData.SubmissionTimestamp,
+                  subscriptionId: eventData.SubscriptionId,
+                  subStatus: eventData.SubStatus)
         {
             this.Authorization = eventData.Authorization != null
                 ? new PSEventDataAuthorization
@@ -55,15 +75,8 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
                     Scope = eventData.Authorization.Scope
                 }
                 : null;
-            this.Caller = eventData.Caller;
             this.Claims = new PSDictionaryElement(eventData.Claims);
-            this.CorrelationId = eventData.CorrelationId;
-            this.Description = eventData.Description;
 
-            this.EventDataId = eventData.EventDataId;
-            this.EventName = eventData.EventName;
-            this.Category = eventData.Category;
-            this.EventTimestamp = eventData.EventTimestamp;
             this.HttpRequest = eventData.HttpRequest != null
                 ? new PSEventDataHttpRequest
                 {
@@ -73,18 +86,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
                     Url = eventData.HttpRequest.Uri
                 }
                 : null;
-            this.Id = eventData.Id;
-            this.Level = eventData.Level;
-            this.OperationId = eventData.OperationId;
-            this.OperationName = eventData.OperationName;
             this.Properties = new PSDictionaryElement(eventData.Properties);
-            this.ResourceGroupName = eventData.ResourceGroupName;
-            this.ResourceProviderName = eventData.ResourceProviderName;
-            this.ResourceId = eventData.ResourceId;
-            this.Status = eventData.Status;
-            this.SubmissionTimestamp = eventData.SubmissionTimestamp;
-            this.SubscriptionId = eventData.SubscriptionId;
-            this.SubStatus = eventData.SubStatus;
         }
     }
 }

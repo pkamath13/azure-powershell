@@ -13,11 +13,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 namespace Microsoft.Azure.Commands.Insights.Test.ActionGroups
 {
     using System.Collections.Generic;
 
-    using Microsoft.Azure.Management.Monitor.Management.Models;
+    using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 
     public class ActionGroupsUtilities
     {

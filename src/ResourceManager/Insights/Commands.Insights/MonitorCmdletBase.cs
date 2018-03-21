@@ -12,13 +12,16 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
+using Microsoft.Azure.Commands.ResourceManager.Common;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure;
+using System;
 using System.Globalization;
 using System.Management.Automation;
 using System.Net;
-using Microsoft.Azure.Commands.ResourceManager.Common;
-using System;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Commands.Insights
 {
@@ -109,7 +112,7 @@ namespace Microsoft.Azure.Commands.Insights
                     else
                     {
                         // New model to report errors (from Swagger Spec)
-                        var errorResponse = exTemp as Microsoft.Azure.Management.Monitor.Models.ErrorResponseException;
+                        var errorResponse = exTemp as ErrorResponseException;
                         if (errorResponse != null)
                         {
                             message = errorResponse.Body.Message;
@@ -120,7 +123,7 @@ namespace Microsoft.Azure.Commands.Insights
                         else
                         {
                             // New model to report errors (from Swagger Spec)
-                            var errorResponse2 = exTemp as Microsoft.Azure.Management.Monitor.Management.Models.ErrorResponseException;
+                            var errorResponse2 = exTemp as ErrorResponseException;
                             if (errorResponse2 != null)
                             {
                                 message = errorResponse2.Body.Message;

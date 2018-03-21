@@ -12,8 +12,9 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using System.Collections.Generic;
-using Microsoft.Rest.Azure;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
 using System.Management.Automation;
@@ -22,8 +23,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Azure.Commands.ScenarioTest;
 using Microsoft.Azure.Commands.Insights.ActionGroups;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using NewSDK::Microsoft.Azure.Management.Monitor;
 
 namespace Microsoft.Azure.Commands.Insights.Test.ActionGroups
 {

@@ -12,15 +12,16 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using System;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
-using System.Threading;
 using System.Xml;
 using Microsoft.Azure.Commands.Insights.OutputClasses;
-using Microsoft.Azure.Management.Monitor;
-using Microsoft.Azure.Management.Monitor.Models;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using Microsoft.Rest.Azure.OData;
 
 namespace Microsoft.Azure.Commands.Insights.Metrics
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Commands.Insights.Metrics
     /// Get the list of metric definition for a resource.
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "AzureRmMetric"), OutputType(typeof(PSMetric[]))]
-    public class GetAzureRmMetricCommand : MonitorClientCmdletBase
+    public class GetAzureRmMetricCommand : ManagementCmdletBase
     {
         internal const string GetAzureRmAMetricParamGroup = "GetWithDefaultParameters";
         internal const string GetAzureRmAMetricFullParamGroup = "GetWithFullParameters";
@@ -72,6 +73,30 @@ namespace Microsoft.Azure.Commands.Insights.Metrics
         /// </summary>
         [Parameter(ParameterSetName = GetAzureRmAMetricFullParamGroup, Mandatory = false, ValueFromPipelineByPropertyName = true, HelpMessage = "The end time of the query")]
         public DateTime EndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the top parameter of the cmdlet
+        /// </summary>
+        [Parameter(ParameterSetName = GetAzureRmAMetricFullParamGroup, Mandatory = false, ValueFromPipelineByPropertyName = true, HelpMessage = "The maximum number of records to retrieve (default:10), to be specified with $filter")]
+        public int? Top { get; set; }
+
+        /// <summary>
+        /// Gets or sets the orderby parameter of the cmdlet
+        /// </summary>
+        [Parameter(ParameterSetName = GetAzureRmAMetricFullParamGroup, Mandatory = false, ValueFromPipelineByPropertyName = true, HelpMessage = "The aggregation to use for sorting results and the direction of the sort (Example: sum asc)")]
+        public string OrderBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the metricnamespace parameter of the cmdlet
+        /// </summary>
+        [Parameter(ParameterSetName = GetAzureRmAMetricFullParamGroup, Mandatory = false, ValueFromPipelineByPropertyName = true, HelpMessage = "The metric namespace to query metrics for")]
+        public string MetricNamespace { get; set; }
+
+        /// <summary>
+        /// Gets or sets the metricfilter parameter of the cmdlet
+        /// </summary>
+        [Parameter(ParameterSetName = GetAzureRmAMetricFullParamGroup, Mandatory = false, ValueFromPipelineByPropertyName = true, HelpMessage = "The metric dimension filter to query metrics for")]
+        public string MetricFilter { get; set; }
 
         /// <summary>
         /// Gets or sets the metricnames parameter of the cmdlet
@@ -133,6 +158,27 @@ namespace Microsoft.Azure.Commands.Insights.Metrics
                     buffer.Append(this.AggregationType);
                     buffer.Append("'");
                 }
+
+                if (this.Top != null)
+                {
+                    buffer.Append(" and top eq '");
+                    buffer.Append(this.Top.ToString());
+                    buffer.Append("'");
+                }
+
+                if (this.OrderBy != null)
+                {
+                    buffer.Append(" and orderBy eq '");
+                    buffer.Append(this.OrderBy);
+                    buffer.Append("'");
+                }
+
+                if (this.MetricNamespace != null)
+                {
+                    buffer.Append(" and metricnamespace eq '");
+                    buffer.Append(this.MetricNamespace);
+                    buffer.Append("'");
+                }
             }
 
             string queryFilter = buffer.ToString();
@@ -153,13 +199,37 @@ namespace Microsoft.Azure.Commands.Insights.Metrics
                 cmdletName: "Get-AzureRmMetric",
                 topic: "Parameter deprecation", 
                 message: "The DetailedOutput parameter will be deprecated in a future breaking change release.");
-            string queryFilter = this.ProcessParameters();
             bool fullDetails = this.DetailedOutput.IsPresent;
 
+            // EndTime defaults to Now
+            if (this.EndTime == default(DateTime))
+            {
+                this.EndTime = DateTime.UtcNow;
+            }
+
+            // StartTime defaults to EndTime - DefaultTimeRange  (NOTE: EndTime defaults to Now)
+            if (this.StartTime == default(DateTime))
+            {
+                this.StartTime = this.EndTime.Subtract(DefaultTimeRange);
+            }
+
+            string timespan = string.Concat(this.StartTime.ToUniversalTime().ToString("O"), "/", this.EndTime.ToUniversalTime().ToString("O"));
+
+            var records = this.MonitorManagementClient.Metrics.List(
+                resourceUri: this.ResourceId,
+                odataQuery: new ODataQuery<MetadataValue>(this.MetricFilter),
+                timespan: timespan,
+                interval: this.TimeGrain,
+                metricnames: string.Join(",", this.MetricName),
+                aggregation: this.AggregationType.ToString(),
+                top: this.Top,
+                orderby: this.OrderBy,
+                resultType: null,
+                metricnamespace: this.MetricNamespace);
             // If fullDetails is present full details of the records are displayed, otherwise only a summary of the records is displayed
-            var records = this.MonitorClient.Metrics.List(resourceUri: this.ResourceId, odataQuery: new ODataQuery<Metric>(queryFilter))
-                .Select(e => fullDetails ? new PSMetric(e) : new PSMetricNoDetails(e)).ToArray();
-            WriteObject(sendToPipeline: records, enumerateCollection: true);
+            var result = records.Value.Select(e => fullDetails ? new PSMetric(e) : new PSMetricNoDetails(e)).ToArray();
+
+            WriteObject(sendToPipeline: result, enumerateCollection: true);
         }
     }
 }

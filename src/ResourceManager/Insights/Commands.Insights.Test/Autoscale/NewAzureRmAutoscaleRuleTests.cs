@@ -12,10 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.Autoscale;
-using Microsoft.Azure.Management.Monitor.Management.Models;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using System;
 using System.Management.Automation;
 using Xunit;

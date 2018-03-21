@@ -12,9 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias OldSDK;
+
 using Microsoft.Azure.Commands.Insights.OutputClasses;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management.Models;
 using System.Management.Automation;
 using System.Threading;
 
@@ -24,7 +26,7 @@ namespace Microsoft.Azure.Commands.Insights.Diagnostics
     /// Gets the logs and metrics for the resource.
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "AzureRmDiagnosticSetting"), OutputType(typeof(PSServiceDiagnosticSettings))]
-    public class GetAzureRmDiagnosticSettingCommand : ManagementCmdletBase
+    public class GetAzureRmDiagnosticSettingCommand : OldManagementCmdletBase
     {
 
         #region Parameters declarations

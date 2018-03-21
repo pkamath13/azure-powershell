@@ -12,21 +12,20 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.Alerts;
-using Microsoft.Azure.Commands.Insights.OutputClasses;
-using Microsoft.Azure.Management.Monitor;
-using Microsoft.Azure.Management.Monitor.Models;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Commands.Insights.Events;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Newtonsoft.Json;
 using Xunit;
-using LocalizableString = Microsoft.Azure.Management.Monitor.Models.LocalizableString;
-using Microsoft.Azure.Commands.Insights.Events;
 
 namespace Microsoft.Azure.Commands.Insights.Test
 {
@@ -122,7 +121,7 @@ namespace Microsoft.Azure.Commands.Insights.Test
 
             return new AzureOperationResponse<IPage<EventData>>()
             {
-                Body = JsonConvert.DeserializeObject<Azure.Management.Monitor.Models.Page1<EventData>>(x)
+                Body = JsonConvert.DeserializeObject<Page1<EventData>>(x)
             };
         }
 
@@ -134,7 +133,7 @@ namespace Microsoft.Azure.Commands.Insights.Test
 
             return new AzureOperationResponse<IPage<EventData>>()
             {
-                Body = JsonConvert.DeserializeObject<Azure.Management.Monitor.Models.Page1<EventData>>(x)
+                Body = JsonConvert.DeserializeObject<Page1<EventData>>(x)
             };
         }
 

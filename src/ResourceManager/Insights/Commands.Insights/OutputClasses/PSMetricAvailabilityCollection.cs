@@ -12,9 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Monitor.Models;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 
 namespace Microsoft.Azure.Commands.Insights.OutputClasses
 {

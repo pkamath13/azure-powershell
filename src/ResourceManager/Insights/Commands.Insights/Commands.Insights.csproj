@@ -44,7 +44,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.Management.Monitor">
+      <HintPath>..\..\..\packages\Microsoft.Azure.Management.Monitor.0.19.1-preview\lib\net452\Microsoft.Azure.Management.Monitor.dll</HintPath>
+      <Aliases>NewSDK</Aliases>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Management.Monitor.old">
       <HintPath>..\..\..\packages\Microsoft.Azure.Management.Monitor.0.16.1-preview\lib\net452\Microsoft.Azure.Management.Monitor.dll</HintPath>
+      <Name>Microsoft.Azure.Management.Monitor.old</Name>
+      <Aliases>OldSDK</Aliases>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Collections" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -83,7 +90,7 @@
     <Compile Include="Diagnostics\GetAzureRmDiagnosticSettingCommand.cs" />
     <Compile Include="LogsCmdletBase.cs" />
     <Compile Include="ActivityLogs\GetAzureRmLogCommand.cs" />
-    <Compile Include="MonitorClientCmdletBase.cs" />
+    <Compile Include="Metrics\NewAzureRmMetricFilterCommand.cs" />
     <Compile Include="MonitorCmdletBase.cs" />
     <Compile Include="LogProfiles\RemoveAzureRmLogProfileCommand.cs" />
     <Compile Include="LogProfiles\GetAzureRmLogProfileCommand.cs" />
@@ -91,6 +98,7 @@
     <Compile Include="ManagementCmdletBase.cs" />
     <Compile Include="Metrics\GetAzureRmMetricDefinitionCommand.cs" />
     <Compile Include="Metrics\GetAzureRmMetricCommand.cs" />
+    <Compile Include="OldManagementCmdletBase.cs" />
     <Compile Include="OutputClasses\CustomPrinter.cs" />
     <Compile Include="OutputClasses\IPSRuleCondition.cs" />
     <Compile Include="OutputClasses\PSActivityLogAlertResource.cs" />

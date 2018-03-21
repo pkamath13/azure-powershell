@@ -12,17 +12,19 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias OldSDK;
+
+using Microsoft.Azure.Commands.Insights.Diagnostics;
+using Microsoft.Rest.Azure;
+using Microsoft.WindowsAzure.Commands.ScenarioTest;
+using Moq;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management.Models;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Commands.Insights.Diagnostics;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
-using Microsoft.Rest.Azure;
-using Microsoft.WindowsAzure.Commands.ScenarioTest;
-using Moq;
 using Xunit;
 
 namespace Microsoft.Azure.Commands.Insights.Test.Diagnostics

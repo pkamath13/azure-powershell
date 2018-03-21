@@ -12,9 +12,10 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
+extern alias OldSDK;
+
 using System.Text;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using OldSDK::Microsoft.Azure.Management.Monitor.Management.Models;
 using System.Xml;
 
 namespace Microsoft.Azure.Commands.Insights.OutputClasses

@@ -12,8 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Management.Monitor.Models;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+extern alias NewSDK;
+extern alias OldSDK;
+
+using NewMonitorSDK = NewSDK::Microsoft.Azure.Management.Monitor.Models;
+using OldMonitorSDK = OldSDK::Microsoft.Azure.Management.Monitor.Management.Models;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
 using System.Collections.Generic;
 using System.Text;
@@ -49,7 +52,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="inputString">The input string</param>
         /// <param name="indentationTabs">The number of tab chars to insert</param>
         /// <returns>A string representation of the LocalizableString</returns>
-        public static string ToString(this LocalizableString inputString, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.LocalizableString inputString, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (inputString != null)
@@ -68,7 +71,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="inputString">The input string</param>
         /// <param name="localizedValue">Flag to inidicate if the localized value must be printed or not</param>
         /// <returns>A string representation of the LocalizableString</returns>
-        public static string ToString(this LocalizableString inputString, bool localizedValue)
+        public static string ToString(this NewMonitorSDK.LocalizableString inputString, bool localizedValue)
         {
             return localizedValue ? inputString.LocalizedValue : inputString.Value;
         }
@@ -81,7 +84,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="ruleEventDataSource">The RuleManagementEventDataSource object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the ScaleCapacity including indentation</returns>
-        public static string ToString(this RuleManagementEventDataSource ruleEventDataSource, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.RuleManagementEventDataSource ruleEventDataSource, int indentationTabs)
         {
             //RuleManagementEventDataSource
             StringBuilder output = new StringBuilder();
@@ -109,7 +112,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="aggregatedCondition">The ManagementEventAggregationCondition object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the ManagementEventAggregationCondition including indentation</returns>
-        public static string ToString(this ManagementEventAggregationCondition aggregatedCondition, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.ManagementEventAggregationCondition aggregatedCondition, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (aggregatedCondition != null)
@@ -129,7 +132,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="ruleMetricDataSource">The RuleMetricDataSource object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the RuleMetricDataSource including indentation</returns>
-        public static string ToString(this RuleMetricDataSource ruleMetricDataSource, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.RuleMetricDataSource ruleMetricDataSource, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (ruleMetricDataSource != null)
@@ -149,7 +152,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="actions">The RuleAction objects</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the list of RuleAction objects including indentation</returns>
-        public static string ToString(this IList<RuleAction> actions, int indentationTabs)
+        public static string ToString(this IList<NewMonitorSDK.RuleAction> actions, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (actions != null)
@@ -157,7 +160,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
                 foreach (var action in actions)
                 {
                     output.AppendLine();
-                    RuleEmailAction eMailAction = action as RuleEmailAction;
+                    NewMonitorSDK.RuleEmailAction eMailAction = action as NewMonitorSDK.RuleEmailAction;
                     if (eMailAction != null)
                     {
                         output.AddSpacesInFront(indentationTabs).AppendLine("SendToServiceOwners : " + eMailAction.SendToServiceOwners);
@@ -165,7 +168,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
                     }
                     else
                     {
-                        RuleWebhookAction webhookAction = action as RuleWebhookAction;
+                        NewMonitorSDK.RuleWebhookAction webhookAction = action as NewMonitorSDK.RuleWebhookAction;
                         if (webhookAction != null)
                         {
                             output.AddSpacesInFront(indentationTabs).AppendLine("ServiceUri : " + webhookAction.ServiceUri);
@@ -206,7 +209,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="scaleCapacity">The ScaleCapacity object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the ScaleCapacity including indentation</returns>
-        public static string ToString(this ScaleCapacity scaleCapacity, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.ScaleCapacity scaleCapacity, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (scaleCapacity != null)
@@ -226,7 +229,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="scaleAction">The ScaleAction object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the ScaleAction including indentation</returns>
-        public static string ToString(this ScaleAction scaleAction, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.ScaleAction scaleAction, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (scaleAction != null)
@@ -247,7 +250,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="metricTrigger">The metricTrigger object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the MetricTrigger including indentation</returns>
-        public static string ToString(this MetricTrigger metricTrigger, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.MetricTrigger metricTrigger, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (metricTrigger != null)
@@ -272,7 +275,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="timeWindow">The TimeWindow object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the TimeWindow including indentation</returns>
-        public static string ToString(this TimeWindow timeWindow, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.TimeWindow timeWindow, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (timeWindow != null)
@@ -292,7 +295,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="recurrence">The Recurrence object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the Recurrence including indentation</returns>
-        public static string ToString(this Recurrence recurrence, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.Recurrence recurrence, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (recurrence != null)
@@ -311,7 +314,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="scaleRules">The list of ScaleRule objects</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the list of ScaleRule objects including indentation</returns>
-        public static string ToString(this IList<ScaleRule> scaleRules, int indentationTabs)
+        public static string ToString(this IList<NewMonitorSDK.ScaleRule> scaleRules, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             scaleRules.ForEach(scaleRule => output.Append(scaleRule.ToString(indentationTabs)));
@@ -325,7 +328,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="webhookNotifications">The list of WebhookNotification objects</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the list of WebhookNotification objects including indentation</returns>
-        public static string ToString(this IList<WebhookNotification> webhookNotifications, int indentationTabs)
+        public static string ToString(this IList<NewMonitorSDK.WebhookNotification> webhookNotifications, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             webhookNotifications.ForEach(webhookNotification => output.Append(webhookNotification.ToString(indentationTabs)));
@@ -339,7 +342,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="autoscaleProfile">The AutoscaleProfile object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the AutoscaleProfile object including indentation</returns>
-        public static string ToString(this AutoscaleProfile autoscaleProfile, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.AutoscaleProfile autoscaleProfile, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (autoscaleProfile != null)
@@ -361,14 +364,14 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="autoscaleNotification">The AutoscaleProfile object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the AutoscaleProfile object including indentation</returns>
-        public static string ToString(this AutoscaleNotification autoscaleNotification, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.AutoscaleNotification autoscaleNotification, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (autoscaleNotification != null)
             {
                 output.AppendLine();
                 output.AddSpacesInFront(indentationTabs).AppendLine("E-mail     : " + autoscaleNotification.Email);
-                output.AddSpacesInFront(indentationTabs).AppendLine("Operation  : " + AutoscaleNotification.Operation);
+                output.AddSpacesInFront(indentationTabs).AppendLine("Operation  : " + NewMonitorSDK.AutoscaleNotification.Operation);
                 output.AddSpacesInFront(indentationTabs).Append("Webhooks   : " + autoscaleNotification.Webhooks.ToString(indentationTabs + DefaultIndentationTabs));
             }
 
@@ -382,7 +385,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="profiles">The list of AutoscaleProfile objects</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the list of AutoscaleProfile objects including indentation</returns>
-        public static string ToString(this IList<AutoscaleProfile> profiles, int indentationTabs)
+        public static string ToString(this IList<NewMonitorSDK.AutoscaleProfile> profiles, int indentationTabs)
         {
             var output = new StringBuilder();
             profiles.ForEach(profile => output.Append(profile.ToString(indentationTabs)));
@@ -396,7 +399,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="notifications">The list of AutoscaleNotification objects</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the list of AutoscaleNotification objects including indentation</returns>
-        public static string ToString(this IList<AutoscaleNotification> notifications, int indentationTabs)
+        public static string ToString(this IList<NewMonitorSDK.AutoscaleNotification> notifications, int indentationTabs)
         {
             var output = new StringBuilder();
             notifications.ForEach(notification => output.Append(notification.ToString(indentationTabs)));
@@ -410,7 +413,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="recurrentSchedule">The RecurrentSchedule object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the RecurrentSchedule including indentation</returns>
-        public static string ToString(this RecurrentSchedule recurrentSchedule, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.RecurrentSchedule recurrentSchedule, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (recurrentSchedule != null)
@@ -431,7 +434,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="scaleRule">The ScaleRule object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the ScaleRule including indentation</returns>
-        public static string ToString(this ScaleRule scaleRule, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.ScaleRule scaleRule, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (scaleRule != null)
@@ -450,7 +453,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="webhookNotification">The WebhookNotification object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the WebhookNotification including indentation</returns>
-        public static string ToString(this WebhookNotification webhookNotification, int indentationTabs)
+        public static string ToString(this NewMonitorSDK.WebhookNotification webhookNotification, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (webhookNotification != null)
@@ -521,7 +524,7 @@ namespace Microsoft.Azure.Commands.Insights.OutputClasses
         /// <param name="retentionPolicy">The RetentionPolicy object</param>
         /// <param name="indentationTabs">The number of tabs to insert in front of each member</param>
         /// <returns>A string representation of the RecurrentSchedule including indentation</returns>
-        public static string ToString(this RetentionPolicy retentionPolicy, int indentationTabs)
+        public static string ToString(this OldMonitorSDK.RetentionPolicy retentionPolicy, int indentationTabs)
         {
             StringBuilder output = new StringBuilder();
             if (retentionPolicy != null)

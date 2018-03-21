@@ -12,22 +12,22 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.Autoscale;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Commands.ScenarioTest;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Xunit;
-using Microsoft.Azure.Commands.Common.Authentication;
-using Microsoft.Azure.Commands.ResourceManager.Common;
-using Microsoft.Azure.Commands.ScenarioTest;
 
 namespace Microsoft.Azure.Commands.Insights.Test.Autoscale
 {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Commands.Insights.Test.Autoscale
 
             responsePage = new AzureOperationResponse<IPage<AutoscaleSettingResource>>()
             {
-                Body = JsonConvert.DeserializeObject<Microsoft.Azure.Management.Monitor.Management.Models.Page<AutoscaleSettingResource>>(JsonConvert.SerializeObject(responseObject))
+                Body = JsonConvert.DeserializeObject<Page<AutoscaleSettingResource>>(JsonConvert.SerializeObject(responseObject))
             };
 
             insightsAutoscaleOperationsMock.Setup(f => f.GetWithHttpMessagesAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, List<string>>>(), It.IsAny<CancellationToken>()))

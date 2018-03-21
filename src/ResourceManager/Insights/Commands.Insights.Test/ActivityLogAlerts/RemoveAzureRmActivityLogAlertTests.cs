@@ -12,18 +12,19 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Microsoft.Rest.Azure;
+extern alias NewSDK;
+
+using Microsoft.Azure.Commands.Insights.ActivityLogAlert;
+using Microsoft.Azure.Commands.ScenarioTest;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.Azure.Commands.ScenarioTest;
-using Microsoft.Azure.Commands.Insights.ActivityLogAlert;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
 
 namespace Microsoft.Azure.Commands.Insights.Test.ActivityLogAlerts
 {

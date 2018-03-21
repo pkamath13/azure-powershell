@@ -12,15 +12,17 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+extern alias NewSDK;
+
 using Microsoft.Azure.Commands.Insights.Events;
-using Microsoft.Azure.Management.Monitor;
-using Microsoft.Azure.Management.Monitor.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
+using NewSDK::Microsoft.Azure.Management.Monitor;
+using NewSDK::Microsoft.Azure.Management.Monitor.Models;
 using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +33,7 @@ namespace Microsoft.Azure.Commands.Insights.Test.Events
     public class GetAzureRmLogTests
     {
         private readonly GetAzureRmLogCommand cmdlet;
-        private readonly Mock<MonitorClient> MonitorClientMock;
+        private readonly Mock<MonitorManagementClient> MonitorClientMock;
         private readonly Mock<IActivityLogsOperations> insightsEventOperationsMock;
         private Mock<ICommandRuntime> commandRuntimeMock;
         private AzureOperationResponse<IPage<EventData>> response;
@@ -44,12 +46,12 @@ namespace Microsoft.Azure.Commands.Insights.Test.Events
         {
             ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
             insightsEventOperationsMock = new Mock<IActivityLogsOperations>();
-            MonitorClientMock = new Mock<MonitorClient>();
+            MonitorClientMock = new Mock<MonitorManagementClient>();
             commandRuntimeMock = new Mock<ICommandRuntime>();
             cmdlet = new GetAzureRmLogCommand()
             {
                 CommandRuntime = commandRuntimeMock.Object,
-                MonitorClient = MonitorClientMock.Object
+                MonitorManagementClient = MonitorClientMock.Object
             };
 
             response = Utilities.InitializeResponse();

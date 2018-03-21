@@ -12,19 +12,17 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure.Commands.Insights.ActionGroups;
 using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using Moq;
 using System.Management.Automation;
 using Xunit;
-using Microsoft.Azure.Commands.Insights.ActionGroups;
 
 namespace Microsoft.Azure.Commands.Insights.Test.ActionGroups
 {
-    using System;
-
     using Microsoft.Azure.Commands.Insights.OutputClasses;
-    using Microsoft.Azure.Management.Monitor.Management.Models;
     using Microsoft.WindowsAzure.Commands.Utilities.Common;
+    using System;
 
     public class NewAzureRmActionGroupReceiverTests
     {
